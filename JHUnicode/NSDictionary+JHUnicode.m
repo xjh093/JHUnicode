@@ -47,6 +47,12 @@
 - (NSString *)jh_description{
     NSString *description = [self jh_description];
     description = [NSString stringWithCString:[description cStringUsingEncoding:NSUTF8StringEncoding] encoding:NSNonLossyASCIIStringEncoding];
+    if (!description) {
+        description = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:self options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];
+    }
+    if (!description) {
+        description = [super description];
+    }
     return description;
 }
 
